@@ -65,6 +65,18 @@ var context = new AudioContext();
 // function below)
 var dtmf = new Tone(context, 350, 440);
 
+const title = document.getElementById("title");
+
+let dictionary = [];
+let sequence = "";
+let word = "";
+
+fetch("./dictionary.json")
+  .then((response) => response.json())
+  .then((json) => {
+    dictionary = json;
+  });
+
 const numberPads = document.querySelectorAll(".dtmf-interface li");
 
 const handlePlay = (event) => {
@@ -72,6 +84,25 @@ const handlePlay = (event) => {
 
   var keyPressed = event.currentTarget.firstChild.innerText; // this gets the number/character that was pressed
   var frequencyPair = dtmfFrequencies[keyPressed]; // this looks up which frequency pair we need
+
+  if (keyPressed === "#" || keyPressed === "*") {
+    sequence = "";
+    word = "";
+  } else {
+    sequence += keyPressed;
+  }
+
+  // find if the word exist
+  let exist = false;
+  dictionary.forEach((d) => {
+    if (d[1] === sequence) {
+      word = d[0];
+      exist = true;
+    }
+  });
+  if (!exist) word = "";
+
+  title.innerText = word ? word : sequence || `_`;
 
   // this sets the freq1 and freq2 properties
   dtmf.freq1 = frequencyPair.f1;
