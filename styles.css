@@ -59,7 +59,7 @@ body {
   background: #ddd;
 }
 
-.dtmf-interface li > span:nth-child(2) {
+.dtmf-interface li > span {
   font-size: 14px;
   color: #333;
   margin-top: 8px;

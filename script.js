@@ -82,7 +82,7 @@ const numberPads = document.querySelectorAll(".dtmf-interface li");
 const handlePlay = (event) => {
   event.preventDefault();
 
-  var keyPressed = event.currentTarget.firstChild.innerText; // this gets the number/character that was pressed
+  var keyPressed = event.currentTarget.id; // this gets the number/character that was pressed
   var frequencyPair = dtmfFrequencies[keyPressed]; // this looks up which frequency pair we need
 
   if (keyPressed === "#" || keyPressed === "*") {
